@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">test1</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_memory_game">MemoryGameActivity</string>
+    <string name="slash">/</string>
+    <string name="zero">0</string>
+    <string name="title_activity_black_jack">BlackJackActivity</string>
+
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#00FF00</color>
+
+    <string name="title_activity_card_flying">CardFlyingActivity</string>
+
+</resources>
