@@ -28,15 +28,16 @@ public class GameView extends View {
 	private Paint mPaint;
 	private card mCard;
 	private coord mCarddim;
-	private RuleType rType;
-	private float mStepX, mStepY;
+	//private RuleType rType;
+	//private float mStepX, mStepY;
 	private int xPadding;
-	private int yPadding;
+	//private int yPadding;
 	private int nMaxCardPerRow;
 	private int nMaxCardPerCol;
-	private boolean mRefresh;
+	//private boolean mRefresh;
 	private int mCountStep;
 	private Handler mHandler;
+	private int mPlayerid;
 
 	public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
@@ -54,7 +55,7 @@ public class GameView extends View {
 
 		mCard = ctxt.getCard();
 		mCarddim = mCard.getCardDim();
-		this.rType = rType;
+		//this.rType = rType;
 		mHandler = handler;
 
 		mCardMap = BitmapFactory.decodeResource(getResources(),
@@ -64,7 +65,7 @@ public class GameView extends View {
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setColor(Color.BLUE);
-		mStepX = mStepY = 0;
+	//	mStepX = mStepY = 0;
 
 	}
 
@@ -81,8 +82,7 @@ public class GameView extends View {
 		xPadding = (width - mCarddim.getX() * nMaxCardPerRow)
 				/ (2 * nMaxCardPerRow);
 
-		yPadding = (height - mCarddim.getY() * nMaxCardPerCol)
-				/ (2 * nMaxCardPerCol);
+		//yPadding = (height - mCarddim.getY() * nMaxCardPerCol) / (2 * nMaxCardPerCol);
 	}
 
 	private void draw_deck(Canvas canvas, playerInfo pinfo) {
@@ -101,39 +101,8 @@ public class GameView extends View {
 		 */
 	}
 
-	private void draw_dealer(Canvas canvas, playerInfo pinfo, int playerId) {
-
-		/*
-		 * if (pinfo.isActive() == false) { Rect dst = new Rect(0, 0, 0, 0);
-		 * canvas.drawBitmap(mCardbackMap, dst.left, dst.top, mPaint); } else
-		 */
-		{
-			draw_player(canvas, pinfo, playerId);
-		}
-
-	}
-
-	private void show_card(Canvas canvas, cardinfo cinfo, coord pos) { // playerInfo
-																		// pinfo)
-																		// {
-		/*
-		 * int width = getWidth(); int height = getHeight(); int nMaxCardPerRow
-		 * = (width) / (2 * mCarddim.getX()); int nMaxCardPerCol = (height) / (2
-		 * * mCarddim.getY());
-		 * 
-		 * nMaxCardPerCol = (nMaxCardPerCol == 0) ? 1 : nMaxCardPerCol;
-		 * nMaxCardPerRow = (nMaxCardPerRow == 0) ? 1 : nMaxCardPerRow;
-		 * Log.i(TAG, "Width:" + width + " # card per row:" + nMaxCardPerRow);
-		 * Log.i(TAG, "Height:" + height + " # card per col:" + nMaxCardPerCol);
-		 * int xPadding = (width - mCarddim.getX() * nMaxCardPerRow) / (2 *
-		 * nMaxCardPerRow);
-		 * 
-		 * int yPadding = (height - mCarddim.getY() * nMaxCardPerCol) / (2 *
-		 * nMaxCardPerCol);
-		 */
-		// Log.i(TAG, "padding:" + xPadding + ", " + yPadding);
-		// coord pos = new coord(0, pinfo.getSPOS().getY());
-		// cardinfo cinfo = null;
+	private void show_card(Canvas canvas, cardinfo cinfo, coord pos) {
+		
 		card_value cval = null;
 		Rect src = null;
 		Rect dst = null;
@@ -254,97 +223,80 @@ public class GameView extends View {
 		return deckInfo;
 	}
 
-	/*
-	 * private int draw_stationary() { int cplayerid = 0; for (int i = 0; i <
-	 * pinfo.getNumCard(); i++) //int i = pinfo.getNumCard() - 1; { cinfo =
-	 * pinfo.getCardAt(i); //cinfo.flipped = true; bitmap = getBitmap(cinfo);
-	 * 
-	 * 
-	 * { //nPos = show_card(canvas, cinfo, pos); cinfo.setFlipped(true);
-	 * 
-	 * } nRect = getBMRect(pos); canvas.drawBitmap(bitmap, nRect.left,
-	 * nRect.top, mPaint);
-	 * 
-	 * if (i % nMaxCardPerRow < nMaxCardPerRow) { pos.incr(xPadding, 0); } }
-	 * return cplayerid; }
-	 * 
-	 * private void draw_moving() {
-	 * 
-	 * // for (int i = 0; i < pinfo.getNumCard(); i++) //int i =
-	 * pinfo.getNumCard() - 1; { cinfo = pinfo.getCardAt(i); //cinfo.flipped =
-	 * true; bitmap = getBitmap(cinfo);
-	 * 
-	 * if (cinfo.getFlipped() == false && i > 0) { //Log.i(TAG, "print card i: "
-	 * + i); playerInfo deckInfo = getDeck(); pos = new coord
-	 * (deckInfo.getSPOS().getX(), deckInfo.getSPOS().getY()); // nRect =
-	 * move_card(canvas, cinfo, pos);
-	 * pos.incr(cinfo.getStep().getX()*mCountStep,
-	 * cinfo.getStep().getY()*mCountStep);
-	 * 
-	 * ret = true; if (mCountStep >= 10) { cinfo.setFlipped(true); } }
-	 * 
-	 * nRect = getBMRect(pos); //Log.i(TAG, "Bitmap pos: " + pos.getX() + ", " +
-	 * pos.getY()); //Log.i(TAG, "Padding x: " + xPadding + " y: " + yPadding);
-	 * canvas.drawBitmap(bitmap, nRect.left, nRect.top, mPaint); }
-	 * 
-	 * }
-	 */
-
-	private boolean draw_player(Canvas canvas, playerInfo pinfo, int playerId) {
-		// if (pinfo.isActive() == true)
-		// {
+	
+	 private void draw_stationary(Canvas canvas, playerInfo pinfo, int playerId) {
+		
 		cardinfo cinfo = null;
 		coord pos = new coord(0, pinfo.getSPOS().getY());
 		Rect nRect = null;
 		Bitmap bitmap = null;
-		boolean ret = false;
 
-		for (int i = 1; i < pinfo.getNumCard(); i++) {
-			cinfo = pinfo.getCardAt(i);
-			if (cinfo.getFlipped() == false && cinfo.getStep() == null) {
-				cinfo.setStep(calStep(cinfo, pos));
-			}
+		int numStationaryCard = pinfo.getNumCard();
+		if (playerId == mPlayerid)
+		{
+			numStationaryCard = numStationaryCard - 1;
 		}
 
-		for (int i = 0; i < pinfo.getNumCard(); i++)
-		// int i = pinfo.getNumCard() - 1;
+		for (int i = 0; i < numStationaryCard; i++) 
 		{
 			cinfo = pinfo.getCardAt(i);
-			// cinfo.flipped = true;
-			bitmap = getBitmap(cinfo);
-
-			if (cinfo.getFlipped() == false && i > 0) {
-				// Log.i(TAG, "print card i: " + i);
-				playerInfo deckInfo = getDeck();
-				pos = new coord(deckInfo.getSPOS().getX(), deckInfo.getSPOS()
-						.getY());
-				// nRect = move_card(canvas, cinfo, pos);
-				pos.incr(cinfo.getStep().getX() * mCountStep, cinfo.getStep()
-						.getY() * mCountStep);
-
-				ret = true;
-				if (mCountStep >= 10) {
-					cinfo.setFlipped(true);
-				}
-			} else {
-				// nPos = show_card(canvas, cinfo, pos);
-				cinfo.setFlipped(true);
-
-			}
-			nRect = getBMRect(pos);
-			// Log.i(TAG, "Bitmap pos: " + pos.getX() + ", " + pos.getY());
-			// Log.i(TAG, "Padding x: " + xPadding + " y: " + yPadding);
+			cinfo.setFlipped(true);
+			bitmap = getBitmap(cinfo);			
+			nRect = getBMRect(pos); 
 			canvas.drawBitmap(bitmap, nRect.left, nRect.top, mPaint);
+			if (i % nMaxCardPerRow < nMaxCardPerRow)
+			{ 
+				pos.incr(xPadding, 0);
+			} 
+		}
+	}
 
-			if (ret == true) {
-				return ret;
-			}
-			if (i % nMaxCardPerRow < nMaxCardPerRow) {
-				pos.incr(xPadding/* + mCarddim.getX() / 4 */, 0);
+	private void draw_moving(Canvas canvas, playerInfo pinfo) {
+		
+		cardinfo cinfo = null;
+		coord pos = new coord(0, pinfo.getSPOS().getY());
+		Rect nRect = null;
+		Bitmap bitmap = null;
+		//boolean ret = false;
+		
+		int i = pinfo.getNumCard() - 1; 
+		cinfo = pinfo.getCardAt(i); 
+		cinfo.setStep(calStep(cinfo, pos));
+		bitmap = getBitmap(cinfo);
+		
+		Log.i(TAG, "b4 flipped pos: (" + pos.getX() + ", " +  pos.getY() + ")"); 
+	
+		if (cinfo.getFlipped() == false)
+		{
+			Log.i(TAG, "print card i: " + i); 
+			playerInfo deckInfo = getDeck(); 
+			pos = new coord (deckInfo.getSPOS().getX(), deckInfo.getSPOS().getY());
+			Log.i(TAG, "b4 pos: (" + pos.getX() + ", " +  pos.getY() + ")"); 
+			pos.incr(cinfo.getStep().getX()*mCountStep, cinfo.getStep().getY()*mCountStep);
+			Log.i(TAG, "after pos: (" + pos.getX() + ", " +  pos.getY() + "), " + 
+					"mCountStep=" + mCountStep);
+			if (mCountStep >= 10)
+			{
+				cinfo.setFlipped(true);
 			}
 		}
-		Log.i(TAG, "draw_player");
-		// send main thread a msg to get the total
+		if (cinfo.getFlipped() == true/*i % nMaxCardPerRow < nMaxCardPerRow*/) {
+			Log.i(TAG, "add padding....");
+			pos.incr(i * xPadding, 0);
+			Log.i(TAG, "after padding pos " + i + " : (" + pos.getX() + ", " +  pos.getY() + "), " +
+					"xPadding=" + xPadding);
+		}
+
+		nRect = getBMRect(pos); 
+		canvas.drawBitmap(bitmap, nRect.left, nRect.top, mPaint); 
+		//return true;
+		
+	}
+
+	public void deliverDoneMsg(int playerId)
+	{
+		if (mPlayerid < 0) 
+			return;
 		try {
 			Messenger msgr = new Messenger(mHandler);
 			Message msg = Message.obtain();
@@ -353,57 +305,44 @@ public class GameView extends View {
 			data.putInt("playerId", playerId);
 			msg.setData(data);
 			msgr.send(msg);
-		} catch (Exception e) {
-
+		} 
+		
+		catch (Exception e) {
+	
 		}
-
-		return false;
-		// }
-		// show_card(canvas, pinfo);
 	}
-
 	@Override
 	public void onDraw(Canvas canvas) {
 		// Log.i(TAG, "onDraw position: " + getX() + " ," + getY() + " dim: "
 		// + getWidth() + ", " + getHeight());
 		// Log.i(TAG, "thread id: " + Thread.currentThread().getId());
 		init();
-		// canvas.save();
-		/*
-		 * if (rType == RuleType.NONE) { draw_deck(canvas); return; } if
-		 * (ctxt.getPlayerId() == -1) return; playerInfo pinfo =
-		 * plst.get(ctxt.getPlayerId());
-		 * 
-		 * Log.i(TAG, "Player id: " + ctxt.getPlayerId() + " RuleType: " +
-		 * pinfo.getRuleType().toString());
-		 */
+
+		mPlayerid = ctxt.getPlayerId();
+		Log.i(TAG, "player id: " + mPlayerid);
+
 		for (int i = 0; i < plst.size(); i++) {
 			playerInfo pinfo = plst.get(i);
 
 			if (pinfo.getRuleType() == RuleType.NONE) {
 				draw_deck(canvas, pinfo);
 			} else {
-				mRefresh = draw_player(canvas, pinfo, i);
-
-				if (mRefresh == true)
-					break;
+				draw_stationary(canvas, pinfo, i);
 			}
 		}
 
-		if (mRefresh == true) {
+		if (mPlayerid != -1)
+		{
+			draw_moving(canvas,  plst.get(mPlayerid));
+		}
+		if (mCountStep <= 10) {
 			// Log.i(TAG, "postInvalidateDelayed");
 			mCountStep++;
 			postInvalidateDelayed(50);
 		} else {
 			mCountStep = 0;
+			deliverDoneMsg(mPlayerid);
 		}
-		// notify();
-
-		// canvas.restore();
-		// ctxt.resetPlayerId();
-
-		// this.postInvalidate();
-		// postInvalidateDelayed(20);
 	}
 
 	private void updateCanvas() {

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.test1.MainActivity"
+            android:name="com.porker.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +23,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.test1.SettingsActivity"
+            android:name="com.porker.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.test1.MemoryGameActivity"
+            android:name="com.porker.MemoryGameActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_memory_game" >
         </activity>
         <activity
-            android:name="com.test1.BlackJackActivity"
+            android:name="com.porker.BlackJackActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_black_jack" >
         </activity>
         <activity
-            android:name="com.test1.CardFlyingActivity"
+            android:name="com.porker.CardFlyingActivity"
             android:label="@string/title_activity_card_flying" >
         </activity>
     </application>

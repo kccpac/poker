@@ -339,11 +339,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		mView.clear();
 		create(this);
 		update_player_list();
-		/*
-		 * for (int i = 0; i < mView.size(); i++) { mRid = i; Log.i(TAG,
-		 * "Start invalidate"); mView.get(i).invalidate(); Log.i(TAG,
-		 * "End invalidate"); }
-		 */
+
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
 		} else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -361,22 +357,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 	}
 
 	private int getRegionId(int vid, int x, int y) {
-
-		/*
-		 * View v = null;
-		 * 
-		 * if (vid == -1) { for (int i = 0; i < mView.size(); i++) { v =
-		 * mView.get(i); int xstart = (int) v.getX(); int xend = xstart +
-		 * v.getWidth(); int ystart = (int) v.getY(); int yend = ystart +
-		 * v.getHeight(); if (x > xstart && x < xend && y > ystart && y < yend)
-		 * { vid = v.getId(); break; } } }
-		 * 
-		 * Log.i(TAG, "View id " + vid); if (vid != -1) { for (int i = 0; i <
-		 * plst.size(); i++) { playerInfo player = plst.get(i); if (vid ==
-		 * player.getVid() && player.getRuleType() == RuleType.PLAYER) { return
-		 * i; } } }
-		 */
-
 		for (int i = 0; i < plst.size(); i++) {
 			playerInfo player = plst.get(i);
 			if (player.getRuleType() != RuleType.NONE) {
@@ -395,24 +375,18 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 	@Override
 	public boolean onTouch(View vv, MotionEvent event) {
 		// TODO Auto-generated method stub
-		//Log.i(TAG, "ViewGroup Onclick event: " + event.getAction() + " pos: "
-		//		+ event.getX() + ", " + event.getY());
-		// Log.i(TAG, "thread id: " + android.os.Process.myTid());
-
 		int rid = -1;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			Log.i(TAG, "ACTION_DOWN");
-			if ((mRid = getRegionId(vv.getId(), (int) event.getX(),
-					(int) event.getY())) != -1) {
+			if ((mRid = getRegionId(vv.getId(), (int) event.getX(), (int) event.getY())) != -1) {
 				playerInfo player = plst.get(mRid);
 				if (player.isActive() == true) {
 					player.addcard(mCard.getcard(0));
 					mCard.removecardAt(0);
-					int total = player.getCardTotal();
-					boolean bIsBlow = player.test(total);
-					Log.i(TAG, "Player BJ total=" + total);
-					
+					//int total = player.getCardTotal();
+					//boolean bIsBlow = player.test(total);
+					//Log.i(TAG, "Player BJ total=" + total);
 				}
 			}
 			break;
