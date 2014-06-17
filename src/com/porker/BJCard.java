@@ -1,6 +1,6 @@
 package com.porker;
 
-import android.util.Log;
+//import android.util.Log;
 
 public class BJCard extends card {
 

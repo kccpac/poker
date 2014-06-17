@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
@@ -23,11 +20,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), BlackJackActivity.class);
 		intent.putExtra("player", 1);
 		// startActivityForResult(intent, 0);
 		startActivity(intent);
+		
 		/*
 		
 		Intent intent = new Intent();

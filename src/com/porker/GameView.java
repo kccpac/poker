@@ -128,41 +128,6 @@ public class GameView extends View {
 		}
 	}
 
-	/*
-	 * private boolean move_card(Canvas canvas, cardinfo cinfo, coord pos) {//
-	 * playerInfo pinfo) {
-	 * 
-	 * playerInfo deckInfo = null; for (int i = 0; i < plst.size(); i++) {
-	 * playerInfo p = plst.get(i); if (p.getRuleType() == RuleType.NONE) {
-	 * deckInfo = p; break; } }
-	 * 
-	 * //int width = getWidth(); //int height = getHeight(); //int
-	 * nMaxCardPerRow = (width) / (2 * mCarddim.getX()); //int nMaxCardPerCol =
-	 * (height) / (2 * mCarddim.getY());
-	 * 
-	 * //nMaxCardPerCol = (nMaxCardPerCol == 0) ? 1 : nMaxCardPerCol;
-	 * //nMaxCardPerRow = (nMaxCardPerRow == 0) ? 1 : nMaxCardPerRow;
-	 * //Log.i(TAG, "Width:" + width + " # card per row:" + nMaxCardPerRow);
-	 * //Log.i(TAG, "Height:" + height + " # card per col:" + nMaxCardPerCol);
-	 * //int xPadding = (width - mCarddim.getX() * nMaxCardPerRow) // / (2 *
-	 * nMaxCardPerRow);
-	 * 
-	 * // int yPadding = (height - mCarddim.getY() * nMaxCardPerCol)/ (2 * //
-	 * nMaxCardPerCol);
-	 * 
-	 * coord dpos = deckInfo.getSPOS(); //coord ppos = pinfo.getSPOS();
-	 * Log.i(TAG, "Deck pos: " + dpos.getX() + ", " + dpos.getY()); Log.i(TAG,
-	 * "Before Card pos: " + pos.getX() + ", " + pos.getY()); //
-	 * ppos.incr(xPadding * pinfo.getNumCard(), 0); Log.i(TAG,
-	 * "After Card pos: " + pos.getX() + ", " + pos.getY()); float slope =
-	 * (pos.getY() - dpos.getY()) / (pos.getX() - dpos.getX()); int stepx =
-	 * (pos.getX() - dpos.getX()) / 10; int y = (int) slope * dpos.getX() +
-	 * stepx; canvas.drawBitmap(mCardbackMap, dpos.getX() + stepx, y, mPaint);
-	 * //pinfo.setSPOS(new coord(dpos.getX() + stepx, y));
-	 * 
-	 * mStepX += 5; // mStepY+=1; return true; }
-	 */
-
 	private Bitmap getBitmap(cardinfo cinfo) {
 		// Bitmap bitmap = null;
 
@@ -343,10 +308,6 @@ public class GameView extends View {
 			mCountStep = 0;
 			deliverDoneMsg(mPlayerid);
 		}
-	}
-
-	private void updateCanvas() {
-		postInvalidateDelayed(50);
 	}
 
 }

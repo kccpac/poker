@@ -3,9 +3,11 @@ package com.porker;
 import java.util.*;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 public class playerInfo {
 
+	private static final String TAG = playerInfo.class.getName();
 	private List<cardinfo> holding;
 	private RuleType mtype;
 	private int vid;
@@ -19,6 +21,7 @@ public class playerInfo {
 		mtype = type;
 		bActive = (type == RuleType.PLAYER) ? true : false;
 		mRule = new Rule();
+		Log.i(TAG, "playerInfo name: " + type.toString());
 	}
 
 	public void addcard(cardinfo card) {

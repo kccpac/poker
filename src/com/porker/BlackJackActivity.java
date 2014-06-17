@@ -1,34 +1,20 @@
 package com.porker;
 
 import java.util.*;//ArrayList;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.*;//Bitmap;
-//import android.graphics.Bitmap.Config;
-//import android.graphics.BitmapFactory;
-//import android.graphics.Canvas;
-//import android.graphics.Color;
-//import android.graphics.Rect;
-//import android.graphics.drawable.Drawable;
-import android.util.*;//DisplayMetrics;
-//import android.util.Log;
-//import android.util.SparseLongArray;
-import android.view.*;//Gravity;
+import android.graphics.*;
+import android.util.*;
+import android.view.*;
 import android.view.ViewGroup.LayoutParams;
-import android.view.View.*;//OnClickListener;
-//import android.view.View.OnTouchListener;
-//import android.view.Menu;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.view.ViewGroup.LayoutParams;
+import android.view.View.*;
 import android.widget.*;
-//import static android.text.InputType.*;
-//import static android.widget.GridLayout.*;
 
 public class BlackJackActivity extends Activity implements OnTouchListener {
 
@@ -53,7 +39,11 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 	private List<RuleType> playerlst;
 	private Rule mRule;
 	private Handler mHandler;
-
+	private TextView mStatusView;
+	private GameView mMainView;
+	private Lock mlock = new ReentrantLock();
+	private Condition mCondition;
+	
 	private List<Integer> genListID() {
 
 		Random rgen = new Random();
@@ -80,16 +70,19 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 
 		Log.i(TAG, "Create");
 		int rows_in_view = col_in_row.length;
+		
 
 		RelativeLayout v = (RelativeLayout) findViewById(R.id.layoutMaster);
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int elem = 0;
-		GameView view = null;
-		int row_size = metrics.heightPixels / rows_in_view;
+		//GameView view = null;
+		int gViewHeight = (int) (0.8*metrics.heightPixels);
+		int row_size = (int) gViewHeight / rows_in_view;
 		rows_in_view = col_in_row.length;
 
 		int row = 0;
 		
+		Log.i(TAG, "gViewHeight: " + gViewHeight);
 		mHandler = new Handler() {
 			public void handleMessage(Message msg)
 			{
@@ -103,9 +96,34 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 				if (bTotal)
 				{
 					playerInfo pinfo = plst.get(playerId);
-					Log.i(TAG, "total: " + pinfo.getCardTotal());
-				}
+					try {
+						mlock.lock();
+						mCondition.signal();
+						genResult(pinfo);					
+						Log.i(TAG, "total: " + pinfo.getCardTotal());
+					}
+					finally {
+						mlock.unlock();
+					}
+				}				
+			}
+			
+			private void genResult(playerInfo pinfo)
+			{
+				RuleType type = pinfo.getRuleType();
 				
+				switch (type) 
+				{	
+					case DEALER: // auto mode
+						break;
+					case PLAYER:
+						break;
+					default:
+						break;
+				}
+				mStatusView.setText(pinfo.getRuleType().toString()+ ":" + pinfo.getCardTotal());
+
+			//	mStatusView.setText(pinfo.getRuleType().toString()+ ":" + pinfo.getCardTotal());
 			}
 		};
 		//List<Integer> lstID = genListID();
@@ -122,7 +140,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 
 			int row_start = row * row_size;
 			int col_size = metrics.widthPixels / col_in_row[row];
-			//int first_row_elem_id = -1;
 
 			for (int col = 0; col < col_in_row[row]; col++) {
 				int col_start = col * col_size;
@@ -133,44 +150,56 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 				playerInfo player = plst.get(elem);
 				player.setDim(dim);
 				player.setSPOS(new coord(col_start, row_start));
-				/*
-				 * Rect dim = new Rect(col_start, row_start, col_start +
-				 * col_size, row_start + row_size);
-				 * 
-				 * view = createView(context, dim, color[elem], elem); id =
-				 * lstID.get(elem); params = new
-				 * RelativeLayout.LayoutParams(col_size, row_size); Log.d(TAG,
-				 * "id: " + id + " oid:" + oid); if (row > 0) { // Log.d(TAG,
-				 * "Element below: " + pId);
-				 * params.addRule(RelativeLayout.BELOW, pId); }
-				 * 
-				 * if (col > 0) { // Log.d(TAG, "Element right: " + oid);
-				 * params.addRule(RelativeLayout.RIGHT_OF, oid); }
-				 * 
-				 * view.setLayoutParams(params); view.setId(id);
-				 * 
-				 * mView.add(view); v.addView(view);
-				 * view.setOnTouchListener(this); oid = id;
-				 * 
-				 * plst.get(elem).setVid(id); if (col == 0) { first_row_elem_id
-				 * = id; }
-				 */
-				// Log.d(TAG, "get Pos at " + elem + "(" + view.getId() + " ): "
-				// + view.getX()
-				// + ", " + view.getY());
 				elem++;
 			}
-			//pId = first_row_elem_id;
-			//oid = -1;
 		}
+		
 		RelativeLayout.LayoutParams params;
 
-		dim = new Rect(0, 0, metrics.widthPixels, metrics.heightPixels);
-		view = createView(context, dim, color[0], 0);
+		dim = new Rect(0, 0, metrics.widthPixels, (int)gViewHeight);
+		mMainView = createView(context, dim, color[0], 0);
+		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
+				gViewHeight);//metrics.heightPixels);
+		mMainView.setId(123);
+		mMainView.setLayoutParams(params);		
+		
+		v.addView(mMainView);
+		/*
+		View v1 = new View(context);
+		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
+				gViewHeight);
+		v1.setLayoutParams(params);
+		v1.setBackgroundColor(Color.BLUE);
+		*/
+		
+		mStatusView = new TextView(context);
+		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
+				metrics.heightPixels - gViewHeight);
+		/*
+		mStatusView.setTop(gViewHeight);
+		mStatusView.setBottom(metrics.heightPixels);
+		mStatusView.setLeft(0);
+		mStatusView.setRight(metrics.widthPixels);
+		*/
+		//v2.getX()
+		/*Log.i(TAG, "v2: x=" + v2.getX() + ", y=" + v2.getY());
+		Log.i(TAG, "v2: top= " + v2.getTop() + 
+				", Left= " + v2.getLeft() +
+				", Bottom= " + v2.getBottom() +
+				", right= " + v2.getRight());*/
+		params.addRule(RelativeLayout.BELOW, mMainView.getId());
+		mStatusView.setLayoutParams(params);
+		
+		mStatusView.setText("abc");
+		mStatusView.setBackgroundColor(Color.GREEN);
+		
+		//v.addView(v1);
+		
+		v.addView(mStatusView);
 		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
 				metrics.heightPixels);
-		view.setLayoutParams(params);
-		v.addView(view);
+		v.setLayoutParams(params);	
+		
 		Button drawButton = new Button(this);
 		drawButton.setText("PASS");
 		params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -178,8 +207,8 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		drawButton.setLayoutParams(params);
-		v.addView(drawButton);
-		view.setOnTouchListener(this);
+		v.addView(drawButton);		
+		mMainView.setOnTouchListener(this);
 		drawButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -190,7 +219,8 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 						if (pinfo.isActive() == true)
 							pinfo.setActive(false);
 					} else if (pinfo.getRuleType() == RuleType.DEALER) {
-						pinfo.setActive(true);
+						//pinfo.setActive(true);
+						autoCardRetrieval(i);
 					}
 				}
 			}
@@ -237,8 +267,9 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		}
 		for (i = 0; i < mPlayer; i++) {
 			playerlst.add(RuleType.PLAYER);
-		}
-
+		}		
+		init_player_list();
+		init_playing_card();
 	}
 
 	private void init_player_list() {
@@ -247,6 +278,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 
 		for (i = 0; i < playerlst.size(); i++) {
 			rtype = playerlst.get(i);
+			// Log.i(TAG, "init_player_list player " + i + ":" + rtype.toString());
 			plst.add(new playerInfo(rtype));
 		}
 	}
@@ -262,7 +294,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 				//		+ " value: " + mCard.getcard(0).getCardValue().getValue());
 				pinfo.addcard(mCard.getcard(0));
 				mCard.removecardAt(0);
-				
 			}
 		}
 		for (i = 0; i < plst.size(); i++) {
@@ -293,12 +324,13 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		mView = new ArrayList<View>();
 		mRid = -1;
 		mRule = new Rule();
+		
+//		mlock = new Lock();
+		mCondition = mlock.newCondition();
 
 		cardSetup();
 
 		init();
-		init_player_list();
-		init_playing_card();
 
 		create(this);
 	}
@@ -370,6 +402,62 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 
 		Log.i(TAG, "Not a player ");
 		return -1;
+	}
+	
+	private void autoCardRetrieval(int pid)
+	{
+		Log.i(TAG, "autoCardRetrieval begin");
+		//final int playerId = pid; 
+		mRid = pid;
+		final playerInfo player = plst.get(pid);
+		new Thread (new Runnable() {
+
+			private int mPermit;
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub				
+				
+				int count = 0;
+
+				while(count < 5)
+				{
+					Log.i(TAG, "Auto getcard #" + count);
+					try {
+						mlock.lock();
+						while (mPermit == 1)
+						{
+							mCondition.await();
+							mPermit--;
+						}
+						player.addcard(mCard.getcard(0));
+						mCard.removecardAt(0);
+						mPermit++;
+						runOnUiThread( new Runnable()
+						{
+							public void run()
+							{
+								Rect dim = player.getDim();
+								mMainView.invalidate(dim.left, dim.top, dim.right, dim.bottom);
+							}
+						});
+					
+					count++;
+					}
+					
+					catch(Exception e)
+					{
+						
+					}
+					finally {
+						mlock.unlock();
+					}
+				}
+				
+			}
+			
+		}).start();
+
 	}
 
 	@Override
