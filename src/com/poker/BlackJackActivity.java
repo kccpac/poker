@@ -1,4 +1,4 @@
-package com.porker;
+package com.poker;
 
 import java.util.*;//ArrayList;
 import java.util.concurrent.locks.Condition;
@@ -325,7 +325,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		mRid = -1;
 		mRule = new Rule();
 		
-//		mlock = new Lock();
 		mCondition = mlock.newCondition();
 
 		cardSetup();
@@ -412,7 +411,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		final playerInfo player = plst.get(pid);
 		new Thread (new Runnable() {
 
-			private int mPermit;
+			private int mPermit = 0;
 
 			@Override
 			public void run() {

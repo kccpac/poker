@@ -1,6 +1,9 @@
-package com.porker;
+package com.poker;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import android.app.Activity;
@@ -8,19 +11,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class MainActivity extends Activity {
 
 	protected static final String TAG = MainActivity.class.getCanonicalName();
 
-	private List<String> mlist;
+// private Dictionary<String, Object> mDictionary;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		
+//		mDictionary = new Hashtable <String, Object>();
+//		mDictionary.put("MemoryGameActivity", MemoryGameActivity.class);
+//		mDictionary.put("BlackJackActivity", BlackJackActivity.class); 
+
+//		ListView lView = (ListView) findViewById(R.id.listView1);
+
+//		ListAdapter adapter = new SimpleAdapter(this, mDictionary, 0, null, null);
+
+		//(this, list,
+        //        R.layout.dictionary_row, from, to); ;
+//		lView.setAdapter(adapter);
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), BlackJackActivity.class);
 		intent.putExtra("player", 1);

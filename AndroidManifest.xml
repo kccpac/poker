@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.porker"
+    package="com.poker"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.porker.MainActivity"
+            android:name="com.poker.test.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +23,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.porker.SettingsActivity"
+            android:name="com.poker.test.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.porker.MemoryGameActivity"
+            android:name="com.poker.test.MemoryGameActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_memory_game" >
         </activity>
         <activity
-            android:name="com.porker.BlackJackActivity"
+            android:name="com.poker.test.BlackJackActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_black_jack" >
         </activity>
         <activity
-            android:name="com.porker.CardFlyingActivity"
+            android:name="com.poker.test.CardFlyingActivity"
             android:label="@string/title_activity_card_flying" >
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package com.porker;
+package com.poker;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.preference.*;//ListPreference;
 import android.text.TextUtils;
 
 import java.util.List;
+
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

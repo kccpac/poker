@@ -1,4 +1,4 @@
-package com.porker;
+package com.poker;
 
 public class card_value {
 	private int type;
