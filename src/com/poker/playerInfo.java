@@ -16,7 +16,7 @@ public class playerInfo {
 	private Rect dim;
 	private Rule mRule;
 	
-	playerInfo(RuleType type) {
+	public playerInfo(RuleType type) {
 		holding = new ArrayList<cardinfo>();
 		mtype = type;
 		bActive = (type == RuleType.PLAYER) ? true : false;
@@ -32,6 +32,11 @@ public class playerInfo {
 		return holding.get(pos);
 	}
 
+	public void cardCleanup()
+	{
+		holding.clear();
+	}
+	
 	public coord getSPOS() {
 		return spos;
 	}
@@ -76,16 +81,10 @@ public class playerInfo {
 	public int getCardTotal() {
 		int total = 0;
 
-		/*
-		for (int i = 0; i < holding.size(); i++) {
-			cardinfo c = holding.get(i);
-			total += c.getCardValue().getValue();
-		}
-		return total;
-		*/
 		int i;
 		int vlist[];
 		
+
 		vlist = new int [holding.size()];
 		for (i = 0; i < holding.size(); i++) {
 			cardinfo c = holding.get(i);

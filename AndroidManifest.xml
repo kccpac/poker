@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.poker.test.MainActivity"
+            android:name="com.poker.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,21 +23,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.poker.test.SettingsActivity"
+            android:name="com.poker.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name="com.poker.test.MemoryGameActivity"
+            android:name="com.poker.MemoryGameActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_memory_game" >
         </activity>
         <activity
-            android:name="com.poker.test.BlackJackActivity"
+            android:name="com.poker.BlackJackActivity"
             android:configChanges="orientation|screenSize|uiMode"
             android:label="@string/title_activity_black_jack" >
         </activity>
         <activity
-            android:name="com.poker.test.CardFlyingActivity"
+            android:name="com.poker.CardFlyingActivity"
             android:label="@string/title_activity_card_flying" >
         </activity>
     </application>

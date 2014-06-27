@@ -28,8 +28,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 			android.graphics.Color.GREEN, android.graphics.Color.GRAY,
 			android.graphics.Color.MAGENTA, android.graphics.Color.RED };
 
-	// private coord mDimCard = new coord(73, 98);
-	// private Bitmap mCardmap;
 	private BJCard mCard;
 	private int mPlayer;
 
@@ -164,14 +162,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		mMainView.setLayoutParams(params);		
 		
 		v.addView(mMainView);
-		/*
-		View v1 = new View(context);
-		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
-				gViewHeight);
-		v1.setLayoutParams(params);
-		v1.setBackgroundColor(Color.BLUE);
-		*/
-		
+
 		mStatusView = new TextView(context);
 		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
 				metrics.heightPixels - gViewHeight);
@@ -192,9 +183,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		
 		mStatusView.setText("abc");
 		mStatusView.setBackgroundColor(Color.GREEN);
-		
-		//v.addView(v1);
-		
+
 		v.addView(mStatusView);
 		params = new RelativeLayout.LayoutParams(metrics.widthPixels,
 				metrics.heightPixels);
@@ -263,7 +252,7 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 		playerlst.add(RuleType.DEALER);
 		playerlst.add(RuleType.NONE);
 		for (i = 0; i < mComputer; i++) {
-			playerlst.add(RuleType.COMPUTER);
+			playerlst.add(RuleType.PLAYER);
 		}
 		for (i = 0; i < mPlayer; i++) {
 			playerlst.add(RuleType.PLAYER);
