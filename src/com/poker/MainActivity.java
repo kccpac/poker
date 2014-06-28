@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
 		// startActivityForResult(intent, 0);
 		startActivity(intent);
 		
-		/*
 		
+		/*
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), CardFlyingActivity.class);
 		//intent.putExtra("player", 1);

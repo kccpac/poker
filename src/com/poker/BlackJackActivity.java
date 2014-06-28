@@ -267,7 +267,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 
 		for (i = 0; i < playerlst.size(); i++) {
 			rtype = playerlst.get(i);
-			// Log.i(TAG, "init_player_list player " + i + ":" + rtype.toString());
 			plst.add(new playerInfo(rtype));
 		}
 	}

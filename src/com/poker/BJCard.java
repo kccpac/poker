@@ -17,10 +17,12 @@ public class BJCard extends card {
 	private void init_value(int num_card)
 	{
 		int val;
+		cardType type[] = cardType.values();
 		for (int i = 0; i < num_card; i++) {
 			// Log.i(TAG, "idx: " + i + " key: " + i/13 + " value:" + i%13);
 			val = i%13+VALUE_OFFSET;
-			cardinfo c = new cardinfo(i / 13, (val < 10)?val: 10);
+			
+			cardinfo c = new cardinfo(type[i/13], (val < 10)?val: 10);
 		//	Log.i(TAG, "idx: " + i + " key: " + i/13 + " value:" + c.getCardValue().getValue());
 			stack.add(c);
 			// Log.i(TAG, "inFlipped = " + c.isFlipped());

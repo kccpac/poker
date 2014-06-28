@@ -61,7 +61,7 @@ public class ImageAdapter extends BaseAdapter {
 		// Log.i(TAG, "Card Flipped : " + cc.isFlipped());
 		if (cc.isFlipped() == true) {
 
-			int deck = cc.getCardValue().getType();
+			int deck = cc.getCardValue().getType().ordinal();
 			int cval = cc.getCardValue().getValue();
 
 			Rect src = ((MemoryGameActivity) mContext).getCardRect(cval, deck);

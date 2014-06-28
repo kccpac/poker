@@ -155,7 +155,7 @@ public class MemoryGameActivity extends Activity implements OnItemClickListener 
 		Log.i(TAG, "onItemClick: " + position);
 
 		cardinfo cc = mMemoryCard.getcard(position);
-		int deck = cc.getCardValue().getType();
+		int deck = cc.getCardValue().getType().ordinal();
 		int cval = cc.getCardValue().getValue();
 		Bitmap bitmap;
 		if (cc.isFlipped() == false) {
@@ -171,7 +171,7 @@ public class MemoryGameActivity extends Activity implements OnItemClickListener 
 			mlastCardPos = position;
 		} else {
 			cardinfo lc = mMemoryCard.getcard(mlastCardPos);
-			int dtype = lc.getCardValue().getType();
+			int dtype = lc.getCardValue().getType().ordinal();
 			int val = lc.getCardValue().getValue();
 
 			if (dtype != deck || val != cval) {

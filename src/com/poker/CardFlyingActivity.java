@@ -40,7 +40,7 @@ public class CardFlyingActivity extends Activity {
 				R.drawable.card_back);
 		//int value_offset = c..getValueOffset();
 		
-		Rect src = c.getCardRect(val.getValue()-1, val.getType());
+		Rect src = c.getCardRect(val.getValue()-1, val.getType().ordinal());
 		mIMap = Bitmap.createBitmap(
 				mCardMap,
 				src.left,

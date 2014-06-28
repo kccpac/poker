@@ -5,7 +5,7 @@ public class cardinfo {
 	boolean flipped;
 	coord step;
 
-	public cardinfo(int type, int val) {
+	public cardinfo(cardType type, int val) {
 		this.cval = new card_value(type, val);
 		flipped = false;
 		step = null;

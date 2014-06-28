@@ -17,9 +17,10 @@ public class MGCard extends card {
 	}
 	private void init_value(int num_card)
 	{
+		cardType type[] = cardType.values();
 		for (int i = 0; i < num_card; i++) {
 			// Log.i(TAG, "idx: " + i + " key: " + i/13 + " value:" + i%13);
-			cardinfo c = new cardinfo(i / 13, i%13);
+			cardinfo c = new cardinfo(type[i / 13], i%13);
 			stack.add(c);
 			// Log.i(TAG, "inFlipped = " + c.isFlipped());
 		}

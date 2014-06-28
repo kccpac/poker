@@ -113,7 +113,7 @@ public class GameView extends View {
 			// cinfo = pinfo.getCardAt(i);
 			cval = cinfo.getCardValue();
 			src = mCard.getCardRect(cval.getValue() - value_offset,
-					cval.getType());
+					cval.getType().ordinal());
 			dst = new Rect(pos.getX(), pos.getY(),
 					pos.getX() + mCarddim.getX(), pos.getY() + mCarddim.getY());
 			bitmap = Bitmap.createBitmap(mCardMap, src.left, src.top,
@@ -138,7 +138,7 @@ public class GameView extends View {
 		card_value cval = cinfo.getCardValue();
 
 		Rect src = mCard.getCardRect(cval.getValue() - value_offset,
-				cval.getType());
+				cval.getType().ordinal());
 		return Bitmap.createBitmap(mCardMap, src.left, src.top,
 				mCarddim.getX(), mCarddim.getY());
 	}
