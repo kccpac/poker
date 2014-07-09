@@ -459,9 +459,6 @@ public class BlackJackActivity extends Activity implements OnTouchListener {
 				if (player.isActive() == true) {
 					player.addcard(mCard.getcard(0));
 					mCard.removecardAt(0);
-					//int total = player.getCardTotal();
-					//boolean bIsBlow = player.test(total);
-					//Log.i(TAG, "Player BJ total=" + total);
 				}
 			}
 			break;
